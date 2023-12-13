@@ -7,15 +7,15 @@ This repository serves as a comprehensive collection of advanced techniques for 
 To use this repository, follow these steps:
 
 1. **Clone the repository:**
-   ```
+   ```bash
    git clone https://github.com/wassim-rached/PostgreSQL-projects-examples
    ```
 2. **Navigate to the project directory:**
-   ```
+   ```bash
    cd your-repo
    ```
 3. **Start the Docker Compose setup:**
-   ```
+   ```bash
    docker-compose up -d
    ```
 
