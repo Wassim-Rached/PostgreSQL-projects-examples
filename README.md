@@ -28,11 +28,13 @@ To use this repository, follow these steps:
 
 Explore the variety of projects and techniques available in this repository:
 
-- **Project 1:**
+**Project 1:**
+
 - Description: Brief overview of Project 1.
 - [Link to Project 1](projects)
 
-- **Project 2:**
+**Project 2:**
+
 - Description: Brief overview of Project 2.
 - [Link to Project 2](projects)
 
