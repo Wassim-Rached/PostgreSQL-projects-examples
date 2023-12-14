@@ -1,7 +1,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS Address (
-    id UUID DEFAULT uuid_generate_v4(),
+    address_id UUID DEFAULT uuid_generate_v4(),
     street_address VARCHAR NOT NULL,
     city VARCHAR(100) NOT NULL,
     state VARCHAR(50) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS Address (
 );
 
 CREATE TABLE IF NOT EXISTS Person(
-    id UUID DEFAULT uuid_generate_v4(), 
+    person_id UUID DEFAULT uuid_generate_v4(), 
 	cin VARCHAR(8) UNIQUE,
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR NOT NULL,
@@ -33,32 +33,32 @@ CREATE TABLE IF NOT EXISTS Person(
 	-- keys and indexes
 	CONSTRAINT person_pk PRIMARY KEY (id),
 	CONSTRAINT unique_full_name UNIQUE(first_name,last_name),
-	CONSTRAINT person_adress_fk FOREIGN KEY (address_id) REFERENCES Address(id)
+	CONSTRAINT person_adress_fk FOREIGN KEY (address_id) REFERENCES Address(address_id)
 );
 
 
 CREATE TABLE IF NOT EXISTS Author(
-    id UUID DEFAULT uuid_generate_v4(),
+    author_id UUID DEFAULT uuid_generate_v4(),
 	person_id UUID NOT NULL,
 	biography TEXT,
 	
 	-- keys and indexes
 	CONSTRAINT author_pk PRIMARY KEY(id),
-	CONSTRAINT author_person_fk FOREIGN KEY (person_id) REFERENCES Person(id)
+	CONSTRAINT author_person_fk FOREIGN KEY (person_id) REFERENCES Person(person_id)
 );
 
 CREATE TABLE IF NOT EXISTS LibrarySubscription(
-    id UUID DEFAULT uuid_generate_v4(),
+    librarySubscription_id UUID DEFAULT uuid_generate_v4(),
 	person_id UUID NOT NULL,
 	
 	-- keys and indexes
 	CONSTRAINT librarySubscription_pk PRIMARY KEY(id),
 	CONSTRAINT librarySubscription_person_fk 
-		FOREIGN KEY (person_id) REFERENCES Person(id)
+		FOREIGN KEY (person_id) REFERENCES Person(person_id)
 );
 
 CREATE TABLE IF NOT EXISTS LibrarySubscriptionPayment(
-    id UUID DEFAULT uuid_generate_v4(),
+    librarySubscriptionPayment_id UUID DEFAULT uuid_generate_v4(),
 	librarySubscription_id UUID NOT NULL,
 	ends_at DATE NOT NULL,
 	
@@ -68,11 +68,11 @@ CREATE TABLE IF NOT EXISTS LibrarySubscriptionPayment(
 	-- keys and indexes
 	CONSTRAINT librarySubscriptionPayment_pk PRIMARY KEY(id),
 	CONSTRAINT librarySubscriptionPayment_librarySubscription_fk
-		FOREIGN KEY(librarySubscription_id) REFERENCES LibrarySubscription(id)
+		FOREIGN KEY(librarySubscription_id) REFERENCES LibrarySubscription(librarySubscription_id)
 );
 
 CREATE TABLE IF NOT EXISTS Book(
-    id UUID DEFAULT uuid_generate_v4(),
+    book_id UUID DEFAULT uuid_generate_v4(),
 	isbn VARCHAR(13) UNIQUE,
 	title VARCHAR,
 	author_id UUID NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS Book(
 	
 	-- keys and indexes
 	CONSTRAINT book_pk PRIMARY KEY(id),
-	CONSTRAINT book_author_fk FOREIGN KEY(author_id) REFERENCES Author(id)
+	CONSTRAINT book_author_fk FOREIGN KEY(author_id) REFERENCES Author(author_id)
 );
 
 CREATE TABLE IF NOT EXISTS BookLoan(
@@ -103,12 +103,12 @@ CREATE TABLE IF NOT EXISTS BookLoan(
 	
 	-- keys and indexes
 	CONSTRAINT bookLoan_pk PRIMARY KEY(id),
-	CONSTRAINT bookLoan_book_fk FOREIGN KEY(book_id) REFERENCES Book(id),
+	CONSTRAINT bookLoan_book_fk FOREIGN KEY(book_id) REFERENCES Book(book_id),
 	CONSTRAINT bookLoan_librarySubscription_fk FOREIGN KEY(librarySubscription_id) REFERENCES LibrarySubscription(id)
 );
 
 CREATE TABLE IF NOT EXISTS Mulct(
-    id UUID DEFAULT uuid_generate_v4(),
+    mulct_id UUID DEFAULT uuid_generate_v4(),
 	amount NUMERIC(12,2) NOT NULL,
 	person_id UUID NOT NULL,
 	paymentCompleted BOOLEAN DEFAULT FALSE,
@@ -119,5 +119,5 @@ CREATE TABLE IF NOT EXISTS Mulct(
 	
 	-- keys and indexes
 	CONSTRAINT payment_pk PRIMARY KEY(id),
-	CONSTRAINT mulct_person_fk FOREIGN KEY(person_id) REFERENCES Person(id)
+	CONSTRAINT mulct_person_fk FOREIGN KEY(person_id) REFERENCES Person(person_id)
 );
