@@ -24,6 +24,18 @@ BEGIN
 	RETURN var_id;
 END$$;
 
+-- get a random id from the 'Author' table
+-- (main perpose is to be used in the 'populate_dummy_books' procedure)
+CREATE OR REPLACE FUNCTION get_random_author_id()
+RETURNS UUID
+LANGUAGE plpgsql AS $$
+DECLARE 
+	var_id UUID;
+BEGIN
+	SELECT author_id INTO var_id FROM Author ORDER BY random() LIMIT 1;
+	RETURN var_id;
+END$$;
+
 -- get person by id
 CREATE OR REPLACE FUNCTION get_person_by_id(p_id UUID)
 RETURNS SETOF Person
