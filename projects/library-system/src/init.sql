@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS Book(
 CREATE TABLE IF NOT EXISTS BookLoan(
     id UUID DEFAULT uuid_generate_v4(),
  	book_id UUID NOT NULL,
-    person_id UUID NOT NULL,
+    librarySubscription_id UUID NOT NULL,
 	loan_date DATE NOT NULL DEFAULT CURRENT_DATE,
 	return_date DATE,
 	
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS BookLoan(
 	-- keys and indexes
 	CONSTRAINT bookLoan_pk PRIMARY KEY(id),
 	CONSTRAINT bookLoan_book_fk FOREIGN KEY(book_id) REFERENCES Book(id),
-	CONSTRAINT bookLoan_person_fk FOREIGN KEY(person_id) REFERENCES Person(id)
+	CONSTRAINT bookLoan_librarySubscription_fk FOREIGN KEY(librarySubscription_id) REFERENCES LibrarySubscription(id)
 );
 
 CREATE TABLE IF NOT EXISTS Mulct(
