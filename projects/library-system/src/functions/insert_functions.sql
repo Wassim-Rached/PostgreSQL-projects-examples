@@ -26,14 +26,7 @@ BEGIN
 	VALUES
 		('12345678', 'John', 'Doe', '12345678', '1990-05-15', 'john.doe@email.com', 'M', get_random_address_id()),
 		('87654321', 'Jane', 'Smith', '87654321', '1985-08-22', 'jane.smith@email.com', 'F', get_random_address_id()),
-		('23456789', 'Alice', 'Johnson', '23456789', '1988-03-10', 'alice.johnson@email.com', 'F', get_random_address_id()),
-		('34567890', 'Bob', 'Williams', '34567890', '1992-11-05', 'bob.williams@email.com', 'M', get_random_address_id()),
-		('78901234', 'Eva', 'Brown', '78901234', '1983-07-18', 'eva.brown@email.com', 'F', get_random_address_id()),
-		('45678901', 'David', 'Jones', '45678901', '1995-04-30', 'david.jones@email.com', 'M', get_random_address_id()),
-		('89012345', 'Sophie', 'Taylor', '89012345', '1980-12-03', 'sophie.taylor@email.com', 'F', get_random_address_id()),
-		('56789012', 'Michael', 'Miller', '56789012', '1998-09-25', 'michael.miller@email.com', 'M', get_random_address_id()),
-		('90123456', 'Grace', 'Anderson', '90123456', '1987-02-14', 'grace.anderson@email.com', 'F', get_random_address_id()),
-		('67890123', 'Kevin', 'White', '67890123', '1993-06-08', 'kevin.white@email.com', 'M', get_random_address_id());
+		('23456789', 'Alice', 'Johnson', '23456789', '1988-03-10', 'alice.johnson@email.com', 'F', get_random_address_id())
 END$$;
 
 
