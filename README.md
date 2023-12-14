@@ -30,13 +30,9 @@ Explore the variety of projects and techniques available in this repository:
 
 **Project 1:**
 
-- Description: Brief overview of Project 1.
-- [Link to Project 1](projects)
-
-**Project 2:**
-
-- Description: Brief overview of Project 2.
-- [Link to Project 2](projects)
+- title : **Library System**
+- Description: _The library system is an organized database that manages books, authors, and patrons. It facilitates borrowing, returning, and searching for books, enhancing library administration and user experience._
+- [Link to Project 1](projects/library-system/)
 
 _Feel free to customize and add more projects as needed._
 
