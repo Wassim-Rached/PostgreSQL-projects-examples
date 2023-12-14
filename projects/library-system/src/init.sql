@@ -1,8 +1,5 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-DROP TABLE IF EXISTS Person CASCADE;
-DROP TABLE IF EXISTS Address CASCADE;
-
 CREATE TABLE IF NOT EXISTS Address (
     id UUID DEFAULT uuid_generate_v4(),
     street_address VARCHAR NOT NULL,
@@ -74,6 +71,25 @@ CREATE TABLE IF NOT EXISTS LibrarySubscriptionPayment(
 		FOREIGN KEY(librarySubscription_id) REFERENCES LibrarySubscription(id)
 );
 
+CREATE TABLE IF NOT EXISTS Book(
+    id UUID DEFAULT uuid_generate_v4(),
+	isbn VARCHAR(13) UNIQUE,
+	title VARCHAR,
+	author_id UUID NOT NULL,
+	publication_year INTEGER NOT NULL,
+	genre VARCHAR NOT NULL,
+	total_pages INTEGER NOT NULL,
+	language VARCHAR(50) NOT NULL,
+	
+	-- checks and validations
+	CONSTRAINT valid_isbn CHECK(LENGTH(isbn)=13),
+	CONSTRAINT valid_total_pages CHECK(total_pages > 0),
+	
+	-- keys and indexes
+	CONSTRAINT book_pk PRIMARY KEY(id),
+	CONSTRAINT book_author_fk FOREIGN KEY(author_id) REFERENCES Author(id)
+);
+
 CREATE TABLE IF NOT EXISTS BookLoan(
     id UUID DEFAULT uuid_generate_v4(),
  	book_id UUID NOT NULL,
@@ -104,23 +120,4 @@ CREATE TABLE IF NOT EXISTS Mulct(
 	-- keys and indexes
 	CONSTRAINT payment_pk PRIMARY KEY(id),
 	CONSTRAINT mulct_person_fk FOREIGN KEY(person_id) REFERENCES Person(id)
-);
-
-CREATE TABLE IF NOT EXISTS Book(
-    id UUID DEFAULT uuid_generate_v4(),
-	isbn VARCHAR(13) UNIQUE,
-	title VARCHAR,
-	author_id UUID NOT NULL,
-	publication_year INTEGER NOT NULL,
-	genre VARCHAR NOT NULL,
-	total_pages INTEGER NOT NULL,
-	language VARCHAR(50) NOT NULL,
-	
-	-- checks and validations
-	CONSTRAINT valid_isbn CHECK(LENGTH(isbn)=13),
-	CONSTRAINT valid_total_pages CHECK(total_pages > 0),
-	
-	-- keys and indexes
-	CONSTRAINT book_pk PRIMARY KEY(id),
-	CONSTRAINT book_author_fk FOREIGN KEY(author_id) REFERENCES Author(id)
 );
