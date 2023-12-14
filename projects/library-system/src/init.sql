@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS Address (
 	CONSTRAINT valid_postal_code CHECK(postal_code ~ '^[0-9]{4}$'),
 	
 	-- keys and indexes
-	CONSTRAINT address_pk PRIMARY KEY(id)
+	CONSTRAINT address_pk PRIMARY KEY(address_id)
 );
 
 CREATE TABLE IF NOT EXISTS Person(
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS Person(
 	CONSTRAINT valid_gender CHECK(gender IN ('M','F')),
 	
 	-- keys and indexes
-	CONSTRAINT person_pk PRIMARY KEY (id),
+	CONSTRAINT person_pk PRIMARY KEY (person_id),
 	CONSTRAINT unique_full_name UNIQUE(first_name,last_name),
 	CONSTRAINT person_adress_fk FOREIGN KEY (address_id) REFERENCES Address(address_id)
 );
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS Author(
 	biography TEXT,
 	
 	-- keys and indexes
-	CONSTRAINT author_pk PRIMARY KEY(id),
+	CONSTRAINT author_pk PRIMARY KEY(author_id),
 	CONSTRAINT author_person_fk FOREIGN KEY (person_id) REFERENCES Person(person_id)
 );
 
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS LibrarySubscription(
 	person_id UUID NOT NULL,
 	
 	-- keys and indexes
-	CONSTRAINT librarySubscription_pk PRIMARY KEY(id),
+	CONSTRAINT librarySubscription_pk PRIMARY KEY(librarySubscription_id),
 	CONSTRAINT librarySubscription_person_fk 
 		FOREIGN KEY (person_id) REFERENCES Person(person_id)
 );
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS LibrarySubscriptionPayment(
     CONSTRAINT valid_ends_at CHECK(ends_at > CURRENT_DATE),
 	
 	-- keys and indexes
-	CONSTRAINT librarySubscriptionPayment_pk PRIMARY KEY(id),
+	CONSTRAINT librarySubscriptionPayment_pk PRIMARY KEY(librarySubscriptionPayment_id),
 	CONSTRAINT librarySubscriptionPayment_librarySubscription_fk
 		FOREIGN KEY(librarySubscription_id) REFERENCES LibrarySubscription(librarySubscription_id)
 );
@@ -86,12 +86,12 @@ CREATE TABLE IF NOT EXISTS Book(
 	CONSTRAINT valid_total_pages CHECK(total_pages > 0),
 	
 	-- keys and indexes
-	CONSTRAINT book_pk PRIMARY KEY(id),
+	CONSTRAINT book_pk PRIMARY KEY(book_id),
 	CONSTRAINT book_author_fk FOREIGN KEY(author_id) REFERENCES Author(author_id)
 );
 
 CREATE TABLE IF NOT EXISTS BookLoan(
-    id UUID DEFAULT uuid_generate_v4(),
+    bookLoan_id UUID DEFAULT uuid_generate_v4(),
  	book_id UUID NOT NULL,
     librarySubscription_id UUID NOT NULL,
 	loan_date DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -102,9 +102,9 @@ CREATE TABLE IF NOT EXISTS BookLoan(
 	CONSTRAINT valid_return_date CHECK(return_date IS NULL OR return_date >= loan_date),
 	
 	-- keys and indexes
-	CONSTRAINT bookLoan_pk PRIMARY KEY(id),
+	CONSTRAINT bookLoan_pk PRIMARY KEY(bookLoan_id),
 	CONSTRAINT bookLoan_book_fk FOREIGN KEY(book_id) REFERENCES Book(book_id),
-	CONSTRAINT bookLoan_librarySubscription_fk FOREIGN KEY(librarySubscription_id) REFERENCES LibrarySubscription(id)
+	CONSTRAINT bookLoan_librarySubscription_fk FOREIGN KEY(librarySubscription_id) REFERENCES LibrarySubscription(librarySubscription_id)
 );
 
 CREATE TABLE IF NOT EXISTS Mulct(
@@ -118,6 +118,6 @@ CREATE TABLE IF NOT EXISTS Mulct(
 	CONSTRAINT valid_amount CHECK(amount > 0),
 	
 	-- keys and indexes
-	CONSTRAINT payment_pk PRIMARY KEY(id),
+	CONSTRAINT payment_pk PRIMARY KEY(mulct_id),
 	CONSTRAINT mulct_person_fk FOREIGN KEY(person_id) REFERENCES Person(person_id)
 );
