@@ -2,7 +2,7 @@ version: "3.8"
 services:
   db:
     container_name: postgres-projects
-    image: postgres
+    image: postgres:16.1-alpine3.19
     restart: always
     environment:
       POSTGRES_USER: wassim
