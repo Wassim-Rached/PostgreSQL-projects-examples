@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS Author(
 
 CREATE TABLE IF NOT EXISTS LibrarySubscription(
     librarySubscription_id UUID DEFAULT uuid_generate_v4(),
-	person_id UUID NOT NULL,
+	person_id UUID NOT NULL UNIQUE,
 	
 	-- keys and indexes
 	CONSTRAINT librarySubscription_pk PRIMARY KEY(librarySubscription_id),
@@ -60,10 +60,10 @@ CREATE TABLE IF NOT EXISTS LibrarySubscription(
 CREATE TABLE IF NOT EXISTS LibrarySubscriptionPayment(
     librarySubscriptionPayment_id UUID DEFAULT uuid_generate_v4(),
 	librarySubscription_id UUID NOT NULL,
-	ends_at DATE NOT NULL,
+	payment_date DATE NOT NULL,
 	
 	-- checks and validations
-    CONSTRAINT valid_ends_at CHECK(ends_at > CURRENT_DATE),
+    CONSTRAINT valid_payment_date CHECK(payment_date < CURRENT_DATE),
 	
 	-- keys and indexes
 	CONSTRAINT librarySubscriptionPayment_pk PRIMARY KEY(librarySubscriptionPayment_id),
