@@ -94,3 +94,24 @@ BEGIN
 	SELECT mulctType_id INTO var_id FROM MulctType ORDER BY random() LIMIT 1;
 	RETURN var_id;
 END$$;
+
+-- get last payment date of a library subscription
+CREATE OR REPLACE FUNCTION get_last_librarySubscription_librarySubscriptionPayment(p_librarySubscription_id UUID)
+RETURNS SETOF LibrarySubscriptionPayment
+LANGUAGE plpgsql AS $$
+BEGIN
+	RETURN QUERY
+		SELECT *
+		FROM LibrarySubscriptionPayment
+		WHERE librarySubscription_id = p_librarySubscription_id
+		ORDER BY payment_date DESC
+		LIMIT 1;
+END$$;
+
+-- get last payment date of a library subscription
+CREATE OR REPLACE FUNCTION get_last_librarySubscription_librarySubscriptionPayment_payment_date(p_librarySubscription_id UUID)
+RETURNS DATE
+LANGUAGE plpgsql AS $$
+BEGIN
+	RETURN (SELECT payment_date FROM get_last_librarySubscription_librarySubscriptionPayment(p_librarySubscription_id));
+END$$;
