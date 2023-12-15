@@ -5,3 +5,19 @@ CREATE OR REPLACE VIEW person_fullInfo AS
 		Person
 		INNER JOIN Address USING(address_id);
 
+CREATE OR REPLACE VIEW author_fullInfo AS
+	SELECT
+		*
+	FROM
+		Author
+		INNER JOIN person_fullInfo USING(person_id);
+
+CREATE OR REPLACE VIEW librarySubscription_fullInfo AS
+	SELECT
+		*,
+		is_subscription_expired(
+			get_last_librarySubscription_librarySubscriptionPayment_payment_date(ls.librarySubscription_id)
+		)
+	FROM
+		LibrarySubscription ls
+		INNER JOIN person_fullInfo p_fi USING(person_id);
