@@ -47,6 +47,13 @@ BEGIN
 	TRUNCATE TABLE BookLoan CASCADE;
 END$$;
 
+-- empty the mulctTypes table
+CREATE OR REPLACE PROCEDURE empty_mulctTypes()
+LANGUAGE plpgsql AS $$
+BEGIN
+	TRUNCATE TABLE MulctType CASCADE;
+END$$;
+
 -- empty the mulcts table
 CREATE OR REPLACE PROCEDURE empty_mulcts()
 LANGUAGE plpgsql AS $$
@@ -59,6 +66,7 @@ CREATE OR REPLACE PROCEDURE empty_database()
 LANGUAGE plpgsql AS $$
 BEGIN
 	CALL empty_mulcts();
+	CALL empty_mulctTypes();
 	CALL empty_bookLoans();
 	CALL empty_books();
 	CALL empty_librarySubscriptionPayments();
