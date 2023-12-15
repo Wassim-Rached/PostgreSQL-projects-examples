@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS LibrarySubscriptionPayment(
 	payment_date DATE NOT NULL,
 	
 	-- checks and validations
-    CONSTRAINT valid_payment_date CHECK(payment_date < CURRENT_DATE),
+    CONSTRAINT valid_payment_date CHECK(payment_date <= CURRENT_DATE),
 	
 	-- keys and indexes
 	CONSTRAINT librarySubscriptionPayment_pk PRIMARY KEY(librarySubscriptionPayment_id),
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS BookLoan(
 	return_date DATE,
 	
 	-- checks and validations
-	CONSTRAINT valid_loan_date CHECK(loan_date >= CURRENT_DATE),
+	CONSTRAINT valid_loan_date CHECK(loan_date <= CURRENT_DATE),
 	CONSTRAINT valid_return_date CHECK(return_date IS NULL OR return_date >= loan_date),
 	
 	-- keys and indexes
@@ -107,17 +107,27 @@ CREATE TABLE IF NOT EXISTS BookLoan(
 	CONSTRAINT bookLoan_librarySubscription_fk FOREIGN KEY(librarySubscription_id) REFERENCES LibrarySubscription(librarySubscription_id)
 );
 
+CREATE TABLE IF NOT EXISTS MulctType(
+	mulctType_id UUID DEFAULT uuid_generate_v4(),
+	mulct_type VARCHAR NOT NULL,
+	mulct_amount NUMERIC(12,2) NOT NULL,
+
+	-- checks and validations
+	CONSTRAINT valid_mulct_amount CHECK(mulct_amount > 0),
+
+	-- keys and indexes
+	CONSTRAINT mulctType_pk PRIMARY KEY(mulctType_id)
+);
+
 CREATE TABLE IF NOT EXISTS Mulct(
     mulct_id UUID DEFAULT uuid_generate_v4(),
-	amount NUMERIC(12,2) NOT NULL,
 	person_id UUID NOT NULL,
-	paymentCompleted BOOLEAN DEFAULT FALSE,
-	reasons TEXT,
-	
-	-- checks and validations
-	CONSTRAINT valid_amount CHECK(amount > 0),
-	
+	mulctType_id UUID NOT NULL,
+	mulct_open_date DATE NOT NULL DEFAULT CURRENT_DATE,
+	mulct_close_date DATE,
+
 	-- keys and indexes
 	CONSTRAINT payment_pk PRIMARY KEY(mulct_id),
-	CONSTRAINT mulct_person_fk FOREIGN KEY(person_id) REFERENCES Person(person_id)
+	CONSTRAINT mulct_person_fk FOREIGN KEY(person_id) REFERENCES Person(person_id),
+	CONSTRAINT mulct_mulctType_fk FOREIGN KEY(mulctType_id) REFERENCES MulctType(mulctType_id)
 );
