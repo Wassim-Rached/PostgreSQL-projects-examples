@@ -15,7 +15,7 @@ To use this repository, follow these steps:
 2. **Navigate to the project directory:**
 
    ```bash
-   cd your-repo
+   cd PostgreSQL-projects-examples
    ```
 
 3. **Start the Docker Compose setup:**
