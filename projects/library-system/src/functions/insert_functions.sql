@@ -79,6 +79,100 @@ BEGIN
 	('9780123456789', 'Sample Book 20', get_random_author_id(), 2022, 'Health', 300, 'Norwegian');
 END$$;
 
+-- fill the 'LibrarySubscription' table with dummy data
+CREATE OR REPLACE PROCEDURE populate_dummy_librarySubscriptions()
+LANGUAGE plpgsql AS $$
+BEGIN
+	INSERT INTO LibrarySubscription (person_id)
+	VALUES
+		(get_random_non_librarySubscriber_person_id()),
+		(get_random_non_librarySubscriber_person_id()),
+		(get_random_non_librarySubscriber_person_id()),
+		(get_random_non_librarySubscriber_person_id()),
+		(get_random_non_librarySubscriber_person_id());
+END$$;
+
+-- fill the 'LibrarySubscriptionPayment' table with dummy data
+CREATE OR REPLACE PROCEDURE populate_dummy_librarySubscriptionPayments()
+LANGUAGE plpgsql AS $$
+BEGIN
+	INSERT INTO LibrarySubscriptionPayment (librarySubscription_id,payment_date)
+	VALUES
+		(get_random_librarySubscription_id(), '2021-01-01'),
+		(get_random_librarySubscription_id(), '2021-02-01'),
+		(get_random_librarySubscription_id(), '2021-03-01'),
+		(get_random_librarySubscription_id(), '2021-04-01'),
+		(get_random_librarySubscription_id(), '2021-05-01'),
+		(get_random_librarySubscription_id(), '2021-06-01'),
+		(get_random_librarySubscription_id(), '2021-07-01'),
+		(get_random_librarySubscription_id(), '2021-08-01'),
+		(get_random_librarySubscription_id(), '2021-09-01'),
+		(get_random_librarySubscription_id(), '2021-10-01'),
+		(get_random_librarySubscription_id(), '2021-11-01'),
+		(get_random_librarySubscription_id(), '2021-12-01'),
+		(get_random_librarySubscription_id(), '2022-01-01'),
+		(get_random_librarySubscription_id(), '2022-02-01'),
+		(get_random_librarySubscription_id(), '2022-03-01'),
+		(get_random_librarySubscription_id(), '2022-04-01'),
+		(get_random_librarySubscription_id(), '2022-05-01'),
+		(get_random_librarySubscription_id(), '2022-06-01'),
+		(get_random_librarySubscription_id(), '2022-07-01'),
+		(get_random_librarySubscription_id(), '2022-08-01');
+END$$;
+
+-- fill the 'BookLoan' table with dummy data
+CREATE OR REPLACE PROCEDURE populate_dummy_bookLoans()
+LANGUAGE plpgsql AS $$
+BEGIN
+	INSERT INTO BookLoan (book_id, librarySubscription_id, loan_date, return_date)
+	VALUES
+		(get_random_book_id(), get_random_librarySubscription_id(), '2021-01-01', '2021-01-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2021-02-01', '2021-02-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2021-03-01', '2021-03-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2021-04-01', '2021-04-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2021-05-01', '2021-05-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2021-06-01', '2021-06-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2021-07-01', '2021-07-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2021-08-01', '2021-08-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2021-09-01', '2021-09-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2021-10-01', '2021-10-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2021-11-01', '2021-11-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2021-12-01', '2021-12-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2022-01-01', '2022-01-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2022-02-01', '2022-02-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2022-03-01', '2022-03-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2022-04-01', '2022-04-15'),
+		(get_random_book_id(), get_random_librarySubscription_id(), '2022-05-01', '2022-05-15');
+END$$;
+
+-- fill the 'MulctType' table with dummy data
+CREATE OR REPLACE PROCEDURE populate_dummy_mulctTypes()
+LANGUAGE plpgsql AS $$
+BEGIN
+	INSERT INTO MulctType (mulct_type, mulct_amount)
+	VALUES
+		('Late Return', 5),
+		('Lost Book', 40),
+		('Damaged Book', 20),
+		('Lost Library Card', 10);
+END$$;
+
+-- fill the 'Mulct' table with dummy data
+CREATE OR REPLACE PROCEDURE populate_dummy_mulcts()
+LANGUAGE plpgsql AS $$
+BEGIN
+	INSERT INTO Mulct (person_id, mulctType_id, mulct_open_date, mulct_close_date)
+	VALUES
+		(get_random_person_id(), get_random_mulctType_id(), '2021-01-04', '2021-04-25'),
+		(get_random_person_id(), get_random_mulctType_id(), '2022-02-21', '2023-05-19'),
+		(get_random_person_id(), get_random_mulctType_id(), '2020-03-16', NULL),
+		(get_random_person_id(), get_random_mulctType_id(), '2021-04-07', '2021-05-02'),
+		(get_random_person_id(), get_random_mulctType_id(), '2020-05-18', '2021-02-04'),
+		(get_random_person_id(), get_random_mulctType_id(), '2022-06-21', '2023-07-05'),
+		(get_random_person_id(), get_random_mulctType_id(), '2020-07-11', NULL),
+		(get_random_person_id(), get_random_mulctType_id(), '2021-08-05', NULL);
+END$$;
+
 CREATE OR REPLACE PROCEDURE populate_database()
 LANGUAGE plpgsql AS $$
 BEGIN
@@ -90,4 +184,23 @@ BEGIN
 	
 	-- fill the 'Author' table with dummy data
 	CALL populate_dummy_authors();
+
+	-- fill the 'Book' table with dummy data
+	CALL populate_dummy_books();
+
+	-- fill the 'LibrarySubscription' table with dummy data
+	CALL populate_dummy_librarySubscriptions();
+
+	-- fill the 'LibrarySubscriptionPayment' table with dummy data
+	CALL populate_dummy_librarySubscriptionPayments();
+
+	-- fill the 'BookLoan' table with dummy data
+	CALL populate_dummy_bookLoans();
+
+	-- fill the 'MulctType' table with dummy data
+	CALL populate_dummy_mulctTypes();
+
+	-- fill the 'Mulct' table with dummy data
+	CALL populate_dummy_mulcts();
 END$$;
+
