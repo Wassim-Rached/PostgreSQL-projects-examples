@@ -47,6 +47,13 @@ BEGIN
 	DROP TABLE IF EXISTS BookLoan CASCADE;
 END$$;
 
+-- drop the mulctTypes table
+CREATE OR REPLACE PROCEDURE drop_mulctTypes()
+LANGUAGE plpgsql AS $$
+BEGIN
+	DROP TABLE IF EXISTS MulctType CASCADE;
+END$$;
+
 -- drop the mulcts table
 CREATE OR REPLACE PROCEDURE drop_mulcts()
 LANGUAGE plpgsql AS $$
@@ -59,6 +66,7 @@ CREATE OR REPLACE PROCEDURE drop_database()
 LANGUAGE plpgsql AS $$
 BEGIN
 	CALL drop_mulcts();
+	CALL drop_mulctTypes();
 	CALL drop_bookLoans();
 	CALL drop_books();
 	CALL drop_librarySubscriptionPayments();
