@@ -17,7 +17,7 @@ CREATE OR REPLACE VIEW librarySubscription_fullInfo AS
 		*,
 		is_subscription_expired(
 			get_last_librarySubscription_librarySubscriptionPayment_payment_date(ls.librarySubscription_id)
-		)
+		) AS subscription_expired
 	FROM
 		LibrarySubscription ls
 		INNER JOIN person_fullInfo p_fi USING(person_id);
