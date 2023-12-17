@@ -20,4 +20,4 @@ CREATE OR REPLACE VIEW librarySubscription_fullInfo AS
 		) AS subscription_expired
 	FROM
 		LibrarySubscription AS ls
-		INNER JOIN person_fullInfo AS p_fi USING(person_id);
+		INNER JOIN person_fullInfo USING(person_id);
